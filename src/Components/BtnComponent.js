@@ -1,6 +1,6 @@
 import React from 'react';
 
-function BtnComponent(props) {
+function BtnComponent(props,{onClickOnStart}) {
   return (
     <div>
       {(props.status === 0)? 

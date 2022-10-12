@@ -3,10 +3,30 @@ import DisplayComponent from './Components/DisplayComponent';
 import BtnComponent from './Components/BtnComponent';
 import './App.css';
 
+
 function App() {
   const [time, setTime] = useState({ms:0, s:0, m:0, h:0});
   const [interv, setInterv] = useState();
   const [status, setStatus] = useState(0);
+  const [items,setItems]=useState([]);
+  const [inputList,setInputList]=useState("");
+  const onClickOnStart=()=>{
+   
+      setItems((oldItems)=>{
+        return [...oldItems,inputList]
+      })
+   
+      setInputList("");
+
+  }
+  const itemEvent=(e)=>{
+    setInputList(e.target.value);
+  
+
+  }
+  
+
+
   // Not started = 0
   // started = 1
   // stopped = 2
@@ -52,12 +72,48 @@ function App() {
 
   return (
     <div className="main-section">
+
+    <div class="mb-3">
+    <label for="exampleFormControlTextarea1" className="form-label" id="task" >Enter the Task </label>
+    <input  value={inputList} className="form-control " id="exampleFormControlTextarea1"  onChange={itemEvent} />
+    <button className="submitTask" onClick={onClickOnStart}
+   >Submit task</button>
+  
+  </div>
+ 
      <div className="clock-holder">
           <div className="stopwatch">
                <DisplayComponent time={time}/>
-               <BtnComponent status={status} resume={resume} reset={reset} stop={stop} start={start}/>
+               <BtnComponent status={status} resume={resume} reset={reset} stop={stop} start={start} onClickOnStart={onClickOnStart} />
           </div>
      </div>
+     
+
+
+     <div className="clock-holder in" id="qwer">
+     <div className="stopwatch in">
+         <h1 >Task List</h1>
+         <ol className="listTag">
+         {inputList}
+         {items.map((itemVal)=>{
+          
+          return <li className="lo">{itemVal}</li>
+
+        }
+        )
+        }
+
+
+         
+         
+         </ol>
+     </div>
+</div>
+
+
+     
+
+
     </div>
   );
 }
